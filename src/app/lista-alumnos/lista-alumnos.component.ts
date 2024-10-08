@@ -31,7 +31,6 @@ export class ListaAlumnosComponent implements AfterViewInit {
     this.dataSource.data = this.dataSource.data.filter(alumno => alumno.id != id)
   }
 
-  editarAlumno
 }
 
 let ELEMENT_DATA: Alumno[] = [
