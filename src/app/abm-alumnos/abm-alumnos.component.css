@@ -1,0 +1,8 @@
+.example-form-field {
+  width: 200px;
+}
+
+#conteiner-crear-alumno {
+  display: flex;
+  gap: 20px;
+}
