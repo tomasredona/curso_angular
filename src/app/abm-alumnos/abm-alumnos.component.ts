@@ -1,37 +1,54 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Alumno } from '../interfaces/alumno.interface';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-abm-alumnos',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, ReactiveFormsModule],
   templateUrl: './abm-alumnos.component.html',
-  styleUrl: './abm-alumnos.component.css'
+  styleUrls: ['./abm-alumnos.component.css']
 })
-export class AbmAlumnosComponent {
+export class AbmAlumnosComponent implements OnInit {
+  alumnoForm: FormGroup;
+
+
   constructor(
     private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<AbmAlumnosComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.alumnoForm = this.formBuilder.group({
-      nombre: ['', [Validators.required]],
-      apellido: ['', [Validators.required]],
-      carrera: ['', [Validators.required]]
+      nombre: [data ? data.alumno.nombre : '', [Validators.required]],
+      apellido: [data ? data.alumno.apellido : '', [Validators.required]],
+      carrera: [data ? data.alumno.carrera : '', [Validators.required]]
     });
   }
-  alumnoForm: FormGroup
-  @Output() alumno = new EventEmitter<Alumno>();
 
-  onSubmit(alumno: Alumno) {
-    if (this.alumnoForm.valid) {
-      this.alumno.emit(alumno)
-      this.alumnoForm.reset()
-      this.alumnoForm.setErrors(null)
-    }
+  ngOnInit(): void {
+    console.log('dataa', this.data.alumno)
   }
 
+  onSubmit() {
+    if (this.alumnoForm.valid) {
+      let nuevoAlumno: Alumno
+      if (this.data?.editar) {
+        nuevoAlumno = {
+          ...this.alumnoForm.value,
+          id: this.data.alumno.id
+        };
+      } else {
+        nuevoAlumno = {
+          ...this.alumnoForm.value, /* nombre: this.alumnoForm.value.nombre y así con los otros dos */
+          id: Math.floor(Math.random() * 50) + 1
+        };
+      }
+      this.dialogRef.close(nuevoAlumno)
+    }
+  }
 }
