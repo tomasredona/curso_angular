@@ -4,3 +4,11 @@ table {
 .cursor {
   cursor: pointer;
 }
+
+#crear-alumno {
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  border-color: rgb(0, 0, 0);
+  border-radius: 50px;
+}

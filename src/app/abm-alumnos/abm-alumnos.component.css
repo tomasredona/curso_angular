@@ -1,8 +1,14 @@
 .example-form-field {
-  width: 200px;
+  width: 80%;
+  margin: 0 auto;
 }
 
-#conteiner-crear-alumno {
+#container-crear-alumno {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.boton-enviar {
+  width: 20%;
+  margin-left: 40px;
 }

@@ -1,5 +1,5 @@
 <form [formGroup]="alumnoForm" (ngSubmit)="onSubmit()">
-    <div id="conteiner-crear-alumno">
+    <div id="container-crear-alumno">
         <mat-form-field class=" example-form-field">
             <mat-label>Nombre</mat-label>
             <input matInput type="text" formControlName="nombre">
@@ -14,8 +14,8 @@
             <mat-label>Carrera</mat-label>
             <input matInput type="text" formControlName="carrera">
         </mat-form-field>
+
+
+        <button class="boton-enviar" mat-raised-button>Enviar</button>
     </div>
-
-    <input type="submit">
-
 </form>

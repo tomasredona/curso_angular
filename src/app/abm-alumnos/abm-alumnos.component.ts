@@ -31,7 +31,7 @@ export class AbmAlumnosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('dataa', this.data.alumno)
+
   }
 
   onSubmit() {

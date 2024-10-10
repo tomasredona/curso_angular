@@ -9,7 +9,7 @@ import { AbmAlumnosComponent } from './abm-alumnos/abm-alumnos.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, ListaAlumnosComponent, AbmAlumnosComponent],
+  imports: [RouterOutlet, NavbarComponent, ListaAlumnosComponent, AbmAlumnosComponent,],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -5,16 +5,20 @@ import { Alumno } from '../interfaces/alumno.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AbmAlumnosComponent } from '../abm-alumnos/abm-alumnos.component';
 import { MatIconModule } from '@angular/material/icon';
+import { FullNamePipePipe } from '../full-name-pipe';
+import { TitleCasePipe } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-lista-alumnos',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatIconModule],
+  imports: [MatTableModule, MatPaginatorModule, MatIconModule, FullNamePipePipe, TitleCasePipe],
   templateUrl: './lista-alumnos.component.html',
   styleUrls: ['./lista-alumnos.component.css']
 })
 export class ListaAlumnosComponent implements AfterViewInit {
-  displayedColumns: string[] = ['nombre', 'apellido', 'carrera', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'carrera', 'acciones'];
   dataSource = new MatTableDataSource<Alumno>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -27,7 +31,7 @@ export class ListaAlumnosComponent implements AfterViewInit {
   crearAlumno() {
 
     const dialogRef = this.dialog.open(AbmAlumnosComponent, {
-      height: '400px',
+      height: '300px',
       width: '600px',
     });
 
@@ -42,7 +46,7 @@ export class ListaAlumnosComponent implements AfterViewInit {
   editarAlumno(alumno: Alumno) {
 
     const dialogRef = this.dialog.open(AbmAlumnosComponent, {
-      height: '400px',
+      height: '300px',
       width: '600px',
       data: { alumno: alumno, editar: true }
     });

@@ -10,9 +10,13 @@
     </mat-drawer>
 
     <div class="example-sidenav-content">
-        <button type="button" mat-button (click)="drawer.toggle()">
-            Toggle sidenav
-        </button>
-    </div>
+        <mat-toolbar>
+            <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span appFontSize>Gestor de Alumnos</span>
+        </mat-toolbar>
 
+    </div>
 </mat-drawer-container>
