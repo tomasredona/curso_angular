@@ -10,3 +10,9 @@
 .example-sidenav {
   padding: 20px;
 }
+
+.nav-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

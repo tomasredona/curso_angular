@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Alumno } from '../interfaces/alumno.interface';
+import { Alumno } from '../../utilities/interfaces/alumno.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AbmAlumnosComponent } from '../abm-alumnos/abm-alumnos.component';
 import { MatIconModule } from '@angular/material/icon';
-import { FullNamePipePipe } from '../full-name-pipe';
+import { FullNamePipePipe } from '../../utilities/pipes/full-name-pipe';
 import { TitleCasePipe } from '@angular/common';
 
 
@@ -22,7 +22,9 @@ export class ListaAlumnosComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Alumno>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) {
+    console.log('alumnos')
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
