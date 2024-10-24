@@ -7,31 +7,40 @@ import { AbmAlumnosComponent } from '../abm-alumnos/abm-alumnos.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FullNamePipePipe } from '../../utilities/pipes/full-name-pipe';
 import { TitleCasePipe } from '@angular/common';
-
-
+import { AlumnosService } from '../../core/services/alumnos.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lista-alumnos',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatIconModule, FullNamePipePipe, TitleCasePipe],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatIconModule,
+    FullNamePipePipe,
+    TitleCasePipe
+  ],
   templateUrl: './lista-alumnos.component.html',
   styleUrls: ['./lista-alumnos.component.css']
 })
 export class ListaAlumnosComponent implements AfterViewInit {
   displayedColumns: string[] = ['nombre', 'carrera', 'acciones'];
-  dataSource = new MatTableDataSource<Alumno>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Alumno>();
+  alumnosSubscription!: Subscription;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dialog: MatDialog) {
-    console.log('alumnos')
-  }
+  constructor(private dialog: MatDialog, private alumnosService: AlumnosService) { }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+
+    // suscripcion al servicio para obtener los alumnos
+    this.alumnosSubscription = this.alumnosService.obtenerAlumnos().subscribe(alumnos => {
+      this.dataSource.data = alumnos;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   crearAlumno() {
-
     const dialogRef = this.dialog.open(AbmAlumnosComponent, {
       height: '300px',
       width: '600px',
@@ -39,36 +48,32 @@ export class ListaAlumnosComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((nuevoAlumno: Alumno) => {
       if (nuevoAlumno) {
-        this.dataSource.data.push(nuevoAlumno);
-        this.dataSource._updateChangeSubscription();
+        this.alumnosService.agregarAlumno(nuevoAlumno);
       }
     });
   }
 
   editarAlumno(alumno: Alumno) {
-
     const dialogRef = this.dialog.open(AbmAlumnosComponent, {
       height: '300px',
       width: '600px',
       data: { alumno: alumno, editar: true }
     });
 
-    dialogRef.afterClosed().subscribe((editarAlumno: Alumno) => {
-      if (editarAlumno) {
-        this.dataSource.data = this.dataSource.data.filter(alumno => alumno.id !== editarAlumno.id);
-        this.dataSource.data.push(editarAlumno);
-        this.dataSource._updateChangeSubscription();
+    dialogRef.afterClosed().subscribe((alumnoEditado: Alumno) => {
+      if (alumnoEditado) {
+        this.alumnosService.editarAlumno(alumnoEditado);
       }
     });
   }
 
   borrarAlumno(id: number) {
-    this.dataSource.data = this.dataSource.data.filter(alumno => alumno.id !== id);
-    this.dataSource._updateChangeSubscription();
+    this.alumnosService.eliminarAlumno(id);
+  }
+
+  ngOnDestroy() {
+    if (this.alumnosSubscription) {
+      this.alumnosSubscription.unsubscribe();
+    }
   }
 }
-
-let ELEMENT_DATA: Alumno[] = [
-  { id: 1, nombre: "Carlos", apellido: "Garcia", carrera: "Derecho" },
-  { id: 2, nombre: "Juan", apellido: "Lopez", carrera: "Psicología" }
-];

@@ -31,12 +31,12 @@ export class AbmAlumnosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   onSubmit() {
     if (this.alumnoForm.valid) {
       let nuevoAlumno: Alumno
+
       if (this.data?.editar) {
         nuevoAlumno = {
           ...this.alumnoForm.value,
