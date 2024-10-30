@@ -1,0 +1,14 @@
+.example-form-field {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#container-crear-curso {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.boton-enviar {
+  width: 20%;
+  margin-left: 40px;
+}

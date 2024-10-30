@@ -1,1 +1,33 @@
-<p>cursos works!</p>
+<h3 class="titulo">
+    Listado de Cursos
+</h3>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element">{{element.nombre | titlecase }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="anio">
+            <th mat-header-cell *matHeaderCellDef> Año </th>
+            <td mat-cell *matCellDef="let element"> {{element.anio}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon (click)="borrarCurso(element.id)" class="cursor">delete</mat-icon>
+                <mat-icon (click)="editarCurso(element)" class="cursor">editar</mat-icon>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>
+
+<button (click)="crearCurso()" mat-stroked-button>Crear Curso</button>

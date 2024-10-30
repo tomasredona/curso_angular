@@ -1,0 +1,20 @@
+.titulo {
+  display: flex;
+  justify-content: center;
+  text-decoration: underline;
+}
+
+table {
+  width: 100%;
+}
+.cursor {
+  cursor: pointer;
+}
+
+section {
+  display: table;
+}
+
+.mat-elevation-z8 {
+  margin-bottom: 10px;
+}

@@ -9,16 +9,12 @@ import { FullNamePipePipe } from '../../utilities/pipes/full-name-pipe';
 import { TitleCasePipe } from '@angular/common';
 import { AlumnosService } from '../../core/services/alumnos.service';
 import { Subscription } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-lista-alumnos',
   standalone: true,
-  imports: [
-    MatTableModule,
-    MatPaginatorModule,
-    MatIconModule,
-    FullNamePipePipe,
-    TitleCasePipe
+  imports: [MatTableModule, MatPaginatorModule, MatIconModule, FullNamePipePipe, TitleCasePipe, MatButtonModule
   ],
   templateUrl: './lista-alumnos.component.html',
   styleUrls: ['./lista-alumnos.component.css']

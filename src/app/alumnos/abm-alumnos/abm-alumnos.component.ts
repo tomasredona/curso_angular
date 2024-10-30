@@ -24,8 +24,8 @@ export class AbmAlumnosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.alumnoForm = this.formBuilder.group({
-      nombre: [data ? data.alumno.nombre : '', [Validators.required]],
-      apellido: [data ? data.alumno.apellido : '', [Validators.required]],
+      nombre: [data ? data.alumno.nombre : '', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
+      apellido: [data ? data.alumno.apellido : '', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
       carrera: [data ? data.alumno.carrera : '', [Validators.required]]
     });
   }

@@ -1,3 +1,6 @@
+<h3 class="titulo">
+    Listado de Alumnos
+</h3>
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
 
@@ -7,7 +10,7 @@
         </ng-container>
 
         <ng-container matColumnDef="carrera">
-            <th mat-header-cell *matHeaderCellDef> Carrera </th>
+            <th mat-header-cell *matHeaderCellDef> Curso </th>
             <td mat-cell *matCellDef="let element"> {{element.carrera | titlecase}} </td>
         </ng-container>
 
@@ -26,4 +29,5 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
 </div>
-<button (click)="crearAlumno()" mat-button id="crear-alumno">Crear Alumno</button>
+
+<button (click)="crearAlumno()" mat-stroked-button>Crear Alumno</button>
