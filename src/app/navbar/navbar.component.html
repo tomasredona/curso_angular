@@ -1,6 +1,7 @@
 <mat-drawer-container class="example-container" autosize>
     <mat-drawer #drawer class="example-sidenav" mode="side">
         <div class="nav-bar">
+
             <button mat-raised-button (click)="drawer.toggle()" [routerLink]="['/alumnos']">
                 Alumnos
             </button>
@@ -11,8 +12,9 @@
                 Clases
             </button>
             <button mat-raised-button (click)="drawer.toggle()" [routerLink]="['/login']">
-                Cerrar sesión
+                Cerrar Sesión
             </button>
+
         </div>
     </mat-drawer>
 

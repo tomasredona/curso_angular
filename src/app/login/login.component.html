@@ -2,22 +2,22 @@
     <mat-card>
         <mat-card-title class="text-center">Iniciar Sesión</mat-card-title>
         <mat-card-content>
-            <form>
-                <mat-form-field appearance="fill">
-                    <mat-label>Nombre de usuario</mat-label>
-                    <input matInput type="text" required />
-                    <!-- <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
-                        El nombre de usuario es requerido.
-                    </mat-error> -->
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+                <mat-form-field class="example-form-field">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput type="text" formControlName="username">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill">
+                <mat-form-field class="example-form-field">
                     <mat-label>Contraseña</mat-label>
-                    <input matInput type="password" required />
-                    <!-- <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
-                        La contraseña es requerida.
-                    </mat-error> -->
+                    <input matInput type="text" formControlName="password">
                 </mat-form-field>
+
+                @if (errorMessage != null) { <mat-error>
+                    las credenciales son incorrectas
+                </mat-error>
+                }
 
                 <div class="text-center">
                     <button mat-raised-button color="primary" type="submit">Iniciar Sesión</button>
