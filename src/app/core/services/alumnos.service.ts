@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Alumno } from '../../utilities/interfaces/alumno.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { environments } from '../../environments';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -12,45 +14,52 @@ export class AlumnosService {
         { id: 2, nombre: "Juan", apellido: "Lopez", carrera: "Fisica" }
     ]);
 
-    constructor() { }
+    private path = environments.path
+
+    constructor(private http: HttpClient) { }
 
     obtenerAlumnos(): Observable<Alumno[]> {
-        return this.alumnosSubject.asObservable();
+        return this.http.get<Alumno[]>(`${this.path}/alumno`)
     }
 
-    agregarAlumno(alumno: Alumno): void {
-        const alumnosActuales = this.alumnosSubject.getValue();
-        this.alumnosSubject.next([...alumnosActuales, alumno]);
+    agregarAlumno(alumno: Alumno): Observable<Alumno> {
+        return this.http.post<Alumno>(`${this.path}/alumno`, alumno)
     }
 
-    editarAlumno(alumnoEditado: Alumno): void {
-        const alumnosActuales = this.alumnosSubject.getValue().map(alumno =>
-            alumno.id === alumnoEditado.id ? alumnoEditado : alumno
-        );
-        this.alumnosSubject.next(alumnosActuales);
+    editarAlumno(alumnoEditado: Alumno): Observable<Alumno> {
+        return this.http.put<Alumno>(`${this.path}/alumno/${alumnoEditado.id}`, alumnoEditado)
+
     }
 
-    eliminarAlumno(id: number): void {
-        Swal.fire({
-            title: "Desea confirmar esta acción?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sí",
-            cancelButtonText: "No"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const alumnosActuales = this.alumnosSubject.getValue().filter(alumno => alumno.id !== id);
-                this.alumnosSubject.next(alumnosActuales);
-                Swal.fire({
-                    title: "Eliminado!",
-                    text: "El alumno ha sido eliminado.",
-                    icon: "success"
-                });
-            }
+    eliminarAlumno(id: number): Observable<any> {
+        return new Observable((observer) => {
+            Swal.fire({
+                title: "¿Desea confirmar esta acción?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.http.delete(`${this.path}/alumno/${id}`).subscribe({
+                        next: (response) => {
+                            Swal.fire({
+                                title: "Eliminado!",
+                                text: "El alumno ha sido eliminado.",
+                                icon: "success"
+                            });
+                            observer.next(response);
+                            observer.complete();
+                        },
+                        error: (error) => observer.error(error)
+                    });
+                } else {
+                    observer.complete();
+                }
+            });
         });
-
     }
 }
 

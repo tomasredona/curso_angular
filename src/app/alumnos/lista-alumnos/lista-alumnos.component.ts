@@ -28,9 +28,11 @@ export class ListaAlumnosComponent implements AfterViewInit {
   constructor(private dialog: MatDialog, private alumnosService: AlumnosService) { }
 
   ngAfterViewInit() {
+    this.obtenerAlumnos()
+  }
 
-    // suscripcion al servicio para obtener los alumnos
-    this.alumnosSubscription = this.alumnosService.obtenerAlumnos().subscribe(alumnos => {
+  obtenerAlumnos() {
+    this.alumnosSubscription = this.alumnosService.obtenerAlumnos().subscribe((alumnos: Alumno[]) => {
       this.dataSource.data = alumnos;
       this.dataSource.paginator = this.paginator;
     });
@@ -44,7 +46,7 @@ export class ListaAlumnosComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((nuevoAlumno: Alumno) => {
       if (nuevoAlumno) {
-        this.alumnosService.agregarAlumno(nuevoAlumno);
+        this.alumnosService.agregarAlumno(nuevoAlumno).subscribe(nuevoAlumno => this.obtenerAlumnos())
       }
     });
   }
@@ -58,13 +60,13 @@ export class ListaAlumnosComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((alumnoEditado: Alumno) => {
       if (alumnoEditado) {
-        this.alumnosService.editarAlumno(alumnoEditado);
+        this.alumnosService.editarAlumno(alumnoEditado).subscribe(alumnoEditado => this.obtenerAlumnos());
       }
     });
   }
 
   borrarAlumno(id: number) {
-    this.alumnosService.eliminarAlumno(id);
+    this.alumnosService.eliminarAlumno(id).subscribe(alumnoEliminado => this.obtenerAlumnos());
   }
 
   ngOnDestroy() {

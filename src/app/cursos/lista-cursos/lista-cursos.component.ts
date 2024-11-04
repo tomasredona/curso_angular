@@ -26,8 +26,10 @@ export class CursosComponent implements AfterViewInit {
   constructor(private dialog: MatDialog, private cursosService: CursosService) { }
 
   ngAfterViewInit() {
+    this.obtenerCursos()
+  }
 
-    // suscripcion al servicio para obtener los cursos
+  obtenerCursos() {
     this.cursosSubscription = this.cursosService.obtenerCursos().subscribe((cursos: Curso[]) => {
       this.dataSource.data = cursos;
       this.dataSource.paginator = this.paginator;
@@ -42,7 +44,7 @@ export class CursosComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((nuevoCurso: Curso) => {
       if (nuevoCurso) {
-        this.cursosService.agregarCurso(nuevoCurso);
+        this.cursosService.agregarCurso(nuevoCurso).subscribe(nuevoCurso => this.obtenerCursos());
       }
     });
   }
@@ -56,13 +58,13 @@ export class CursosComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((cursoEditado: Curso) => {
       if (cursoEditado) {
-        this.cursosService.editarCurso(cursoEditado);
+        this.cursosService.editarCurso(cursoEditado).subscribe(cursoEditado => this.obtenerCursos());
       }
     });
   }
 
   borrarCurso(id: number) {
-    this.cursosService.eliminarCurso(id);
+    this.cursosService.eliminarCurso(id).subscribe(borrarCurso => this.obtenerCursos());
   }
 
   ngOnDestroy() {
