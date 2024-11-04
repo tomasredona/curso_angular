@@ -26,7 +26,7 @@ export class AbmAlumnosComponent implements OnInit {
     this.alumnoForm = this.formBuilder.group({
       nombre: [data ? data.alumno.nombre : '', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
       apellido: [data ? data.alumno.apellido : '', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
-      carrera: [data ? data.alumno.carrera : '', [Validators.required]]
+      carrera: [data ? data.alumno.carrera : '', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]]
     });
   }
 

@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Curso } from '../utilities/interfaces/curso.interface';
+import { Curso } from '../../utilities/interfaces/curso.interface';
 import { MatDialog } from '@angular/material/dialog';
-import { AbmCursosComponent } from './abm-cursos/abm-cursos.component';
+import { AbmCursosComponent } from '../abm-cursos/abm-cursos.component';
 import { MatIconModule } from '@angular/material/icon';
 import { TitleCasePipe } from '@angular/common';
-import { CursosService } from '../core/services/cursos.service';
+import { CursosService } from '../../core/services/cursos.service';
 import { Subscription } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -14,8 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-cursos',
   standalone: true,
   imports: [MatTableModule, MatPaginatorModule, MatIconModule, TitleCasePipe, MatButtonModule],
-  templateUrl: './cursos.component.html',
-  styleUrl: './cursos.component.css'
+  templateUrl: './lista-cursos.component.html',
+  styleUrl: './lista-cursos.component.css'
 })
 export class CursosComponent implements AfterViewInit {
   displayedColumns: string[] = ['nombre', 'anio', 'acciones'];
@@ -28,7 +28,7 @@ export class CursosComponent implements AfterViewInit {
   ngAfterViewInit() {
 
     // suscripcion al servicio para obtener los cursos
-    this.cursosSubscription = this.cursosService.obtenerCursos().subscribe(cursos => {
+    this.cursosSubscription = this.cursosService.obtenerCursos().subscribe((cursos: Curso[]) => {
       this.dataSource.data = cursos;
       this.dataSource.paginator = this.paginator;
     });

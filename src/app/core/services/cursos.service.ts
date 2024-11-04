@@ -8,8 +8,8 @@ import Swal from 'sweetalert2'
 })
 export class CursosService {
     private cursosSubject: BehaviorSubject<Curso[]> = new BehaviorSubject<Curso[]>([
-        { id: 1, nombre: "Quimica", anio: 1 },
-        { id: 2, nombre: "Fisica", anio: 1 }
+        { id: 1, nombre: "desarrollo web", anio: 1 },
+        { id: 2, nombre: "marketing", anio: 3 }
     ]);
 
     constructor() { }

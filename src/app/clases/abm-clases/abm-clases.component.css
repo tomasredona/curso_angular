@@ -2,7 +2,7 @@
   width: 80%;
   margin: 0 auto;
 }
-#container-crear-alumno {
+#container-crear-clase {
   display: flex;
   flex-direction: column;
   padding-top: 20px;

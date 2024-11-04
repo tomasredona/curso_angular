@@ -1,0 +1,14 @@
+<form [formGroup]="claseForm" (ngSubmit)="onSubmit()">
+    <div id="container-crear-clase">
+        <mat-form-field class=" example-form-field">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" formControlName="nombre">
+        </mat-form-field>
+
+        <mat-form-field class="example-form-field">
+            <mat-label>Dificultad</mat-label>
+            <input matInput type="text" formControlName="dificultad">
+        </mat-form-field>
+
+        <button class="boton-enviar" mat-raised-button>Enviar</button>
+    </div>
