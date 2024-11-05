@@ -1,6 +1,5 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -8,15 +7,29 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
     private isAuthenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private mockUser = { username: 'user', password: 'password' };
-    constructor() { }
+
+    constructor() {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            this.isAuthenticatedSubject.next(true);
+        }
+    }
 
     login(username: string, password: string): Observable<boolean> {
         const isAuthenticated = username === this.mockUser.username && password === this.mockUser.password;
-        this.isAuthenticatedSubject.next(isAuthenticated);
-        return this.isAuthenticatedSubject.asObservable();
+        if (isAuthenticated) {
+            const token = btoa(`${username}:${new Date().getTime()}`);
+            localStorage.setItem('authToken', token);
+            this.isAuthenticatedSubject.next(true);
+            return of(true);
+        } else {
+            this.isAuthenticatedSubject.next(false);
+            return of(false);
+        }
     }
 
     logout(): void {
+        localStorage.removeItem('authToken');
         this.isAuthenticatedSubject.next(false);
     }
 

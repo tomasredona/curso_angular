@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FontSizeDirective } from '../utilities/directivas/font-size.directive';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,4 +16,10 @@ import { RouterLink } from '@angular/router';
 })
 export class NavbarComponent {
   showFiller = false;
+
+  constructor(private authService: AuthService) { }
+
+  cerrarSesion() {
+    this.authService.logout()
+  }
 }

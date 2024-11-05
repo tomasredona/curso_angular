@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { FullNamePipePipe } from '../../utilities/pipes/full-name-pipe';
 import { TitleCasePipe } from '@angular/common';
 import { AlumnosService } from '../../core/services/alumnos.service';
-import { Subscription } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -22,7 +21,6 @@ import { MatButtonModule } from '@angular/material/button';
 export class ListaAlumnosComponent implements AfterViewInit {
   displayedColumns: string[] = ['nombre', 'carrera', 'acciones'];
   dataSource = new MatTableDataSource<Alumno>();
-  alumnosSubscription!: Subscription;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private dialog: MatDialog, private alumnosService: AlumnosService) { }
@@ -32,7 +30,7 @@ export class ListaAlumnosComponent implements AfterViewInit {
   }
 
   obtenerAlumnos() {
-    this.alumnosSubscription = this.alumnosService.obtenerAlumnos().subscribe((alumnos: Alumno[]) => {
+    this.alumnosService.obtenerAlumnos().subscribe((alumnos: Alumno[]) => {
       this.dataSource.data = alumnos;
       this.dataSource.paginator = this.paginator;
     });
@@ -69,9 +67,4 @@ export class ListaAlumnosComponent implements AfterViewInit {
     this.alumnosService.eliminarAlumno(id).subscribe(alumnoEliminado => this.obtenerAlumnos());
   }
 
-  ngOnDestroy() {
-    if (this.alumnosSubscription) {
-      this.alumnosSubscription.unsubscribe();
-    }
-  }
 }

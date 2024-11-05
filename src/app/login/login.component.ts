@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
-import { O } from '@angular/cdk/keycodes';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -28,7 +27,6 @@ export class LoginComponent {
 
   onLogin(): void {
     if (this.loginForm.valid) {
-      console.log("entrando login", this.loginForm)
       const { username, password } = this.loginForm.value;
       this.authService.login(username, password).subscribe(isAuthenticated => {
         if (isAuthenticated) {

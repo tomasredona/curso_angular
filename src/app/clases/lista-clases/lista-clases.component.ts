@@ -7,7 +7,6 @@ import { AbmClasesComponent } from '../abm-clases/abm-clases.component';
 import { MatIconModule } from '@angular/material/icon';
 import { TitleCasePipe } from '@angular/common';
 import { ClasesService } from '../../core/services/clases.service';
-import { Subscription } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -21,19 +20,20 @@ import { MatButtonModule } from '@angular/material/button';
 export class ListaClasesComponent implements AfterViewInit {
   displayedColumns: string[] = ['nombre', 'dificultad', 'acciones'];
   dataSource = new MatTableDataSource<Clase>();
-  clasesSubscription!: Subscription;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private dialog: MatDialog, private clasesService: ClasesService) { }
 
   ngAfterViewInit() {
-
-    // suscripcion al servicio para obtener los clases
-    this.clasesSubscription = this.clasesService.obtenerClases().subscribe(clases => {
+    this.obtenerClases()
+  }
+  obtenerClases() {
+    this.clasesService.obtenerClases().subscribe(clases => {
       this.dataSource.data = clases;
       this.dataSource.paginator = this.paginator;
     });
   }
+
 
   crearClase() {
     const dialogRef = this.dialog.open(AbmClasesComponent, {
@@ -66,11 +66,6 @@ export class ListaClasesComponent implements AfterViewInit {
     this.clasesService.eliminarClase(id);
   }
 
-  ngOnDestroy() {
-    if (this.clasesSubscription) {
-      this.clasesSubscription.unsubscribe();
-    }
-  }
 }
 
 

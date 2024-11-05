@@ -44,7 +44,7 @@ export class AbmCursosComponent implements OnInit {
         };
       } else {
         nuevoCurso = {
-          ...this.cursoForm.value, /* nombre: this.cursoForm.value.nombre y así con los otros dos */
+          ...this.cursoForm.value,
           id: Math.floor(Math.random() * 50) + 1
         };
       }

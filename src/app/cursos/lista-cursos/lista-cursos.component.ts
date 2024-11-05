@@ -7,7 +7,6 @@ import { AbmCursosComponent } from '../abm-cursos/abm-cursos.component';
 import { MatIconModule } from '@angular/material/icon';
 import { TitleCasePipe } from '@angular/common';
 import { CursosService } from '../../core/services/cursos.service';
-import { Subscription } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -20,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class CursosComponent implements AfterViewInit {
   displayedColumns: string[] = ['nombre', 'anio', 'acciones'];
   dataSource = new MatTableDataSource<Curso>();
-  cursosSubscription!: Subscription;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private dialog: MatDialog, private cursosService: CursosService) { }
@@ -30,7 +29,7 @@ export class CursosComponent implements AfterViewInit {
   }
 
   obtenerCursos() {
-    this.cursosSubscription = this.cursosService.obtenerCursos().subscribe((cursos: Curso[]) => {
+    this.cursosService.obtenerCursos().subscribe((cursos: Curso[]) => {
       this.dataSource.data = cursos;
       this.dataSource.paginator = this.paginator;
     });
@@ -67,11 +66,6 @@ export class CursosComponent implements AfterViewInit {
     this.cursosService.eliminarCurso(id).subscribe(borrarCurso => this.obtenerCursos());
   }
 
-  ngOnDestroy() {
-    if (this.cursosSubscription) {
-      this.cursosSubscription.unsubscribe();
-    }
-  }
 }
 
 
