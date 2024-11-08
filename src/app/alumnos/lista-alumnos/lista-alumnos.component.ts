@@ -9,17 +9,17 @@ import { FullNamePipePipe } from '../../utilities/pipes/full-name-pipe';
 import { TitleCasePipe } from '@angular/common';
 import { AlumnosService } from '../../core/services/alumnos.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 
 @Component({
   selector: 'app-lista-alumnos',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatIconModule, FullNamePipePipe, TitleCasePipe, MatButtonModule
-  ],
+  imports: [MatTableModule, MatPaginatorModule, MatIconModule, FullNamePipePipe, TitleCasePipe, MatButtonModule, MatCard, MatCardHeader, MatCardTitle, MatCardContent],
   templateUrl: './lista-alumnos.component.html',
   styleUrls: ['./lista-alumnos.component.css']
 })
 export class ListaAlumnosComponent implements AfterViewInit {
-  displayedColumns: string[] = ['nombre', 'carrera', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'curso', 'acciones'];
   dataSource = new MatTableDataSource<Alumno>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -49,11 +49,11 @@ export class ListaAlumnosComponent implements AfterViewInit {
     });
   }
 
-  editarAlumno(alumno: Alumno) {
+  editarAlumno(alumno: Alumno, puedeEditar: boolean) {
     const dialogRef = this.dialog.open(AbmAlumnosComponent, {
       height: '300px',
       width: '600px',
-      data: { alumno: alumno, editar: true }
+      data: { alumno: alumno, editar: true, puedeEditar: puedeEditar }
     });
 
     dialogRef.afterClosed().subscribe((alumnoEditado: Alumno) => {

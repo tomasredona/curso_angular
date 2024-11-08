@@ -10,11 +10,25 @@
             <input matInput type="text" formControlName="apellido">
         </mat-form-field>
 
-        <mat-form-field class="example-form-field">
-            <mat-label>Curso</mat-label>
-            <input matInput type="text" formControlName="carrera">
-        </mat-form-field>
-
+        @if (data.puedeEditar) {
+        <div style="display: flex;">
+            <mat-form-field style="width: 90%; margin: 0 auto;">
+                <mat-label>Toppings</mat-label>
+                <mat-select formControlName="curso" multiple [compareWith]="compareCursos">
+                    @for (curso of listaCursos; track curso) {
+                    <mat-option [value]="curso"> {{curso.nombre}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+        }@else{
+        <div style="display: flex;">
+            @for (item of data.alumno.curso; track $index) {
+            <div style="background-color: aqua; border-radius: 50%; padding: 5px; margin: 0 auto;">{{item.nombre}}
+            </div>
+            }
+        </div>
+        }
 
         <button class="boton-enviar" mat-raised-button>Enviar</button>
     </div>

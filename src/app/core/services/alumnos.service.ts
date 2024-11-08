@@ -9,10 +9,6 @@ import { HttpClient } from '@angular/common/http';
     providedIn: 'root'
 })
 export class AlumnosService {
-    private alumnosSubject: BehaviorSubject<Alumno[]> = new BehaviorSubject<Alumno[]>([
-        { id: 1, nombre: "Carlos", apellido: "Garcia", carrera: "Quimica" },
-        { id: 2, nombre: "Juan", apellido: "Lopez", carrera: "Fisica" }
-    ]);
 
     private path = environments.path
 
@@ -41,7 +37,7 @@ export class AlumnosService {
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Sí",
                 cancelButtonText: "No"
-            }).then((result) => {
+            }).then((result: { isConfirmed: boolean }) => {
                 if (result.isConfirmed) {
                     this.http.delete(`${this.path}/alumno/${id}`).subscribe({
                         next: (response) => {
@@ -62,4 +58,3 @@ export class AlumnosService {
         });
     }
 }
-

@@ -12,7 +12,7 @@ describe('AuthService', () => {
     });
 
     afterEach(() => {
-        localStorage.removeItem('authToken'); // Limpiar el almacenamiento después de cada prueba
+        localStorage.removeItem('authToken');
     });
 
     it('debería ser creado', () => {
@@ -23,7 +23,7 @@ describe('AuthService', () => {
         it('debería autenticar al usuario con credenciales correctas', (done) => {
             service.login('user', 'password').subscribe(isAuthenticated => {
                 expect(isAuthenticated).toBeTrue();
-                expect(localStorage.getItem('authToken')).toBeTruthy(); // Verificar que el token fue almacenado
+                expect(localStorage.getItem('authToken')).toBeTruthy();
                 service.isAuthenticated().subscribe(authStatus => {
                     expect(authStatus).toBeTrue();
                     done();
@@ -34,7 +34,7 @@ describe('AuthService', () => {
         it('no debería autenticar al usuario con credenciales incorrectas', (done) => {
             service.login('user', 'wrongPassword').subscribe(isAuthenticated => {
                 expect(isAuthenticated).toBeFalse();
-                expect(localStorage.getItem('authToken')).toBeNull(); // Verificar que el token no fue almacenado
+                expect(localStorage.getItem('authToken')).toBeNull();
                 service.isAuthenticated().subscribe(authStatus => {
                     expect(authStatus).toBeFalse();
                     done();
@@ -45,9 +45,9 @@ describe('AuthService', () => {
 
     describe('logout', () => {
         it('debería eliminar el token y actualizar el estado de autenticación', () => {
-            service.login('user', 'password'); // Primero, autenticamos al usuario
+            service.login('user', 'password');
             service.logout();
-            expect(localStorage.getItem('authToken')).toBeNull(); // Verificar que el token fue eliminado
+            expect(localStorage.getItem('authToken')).toBeNull();
             service.isAuthenticated().subscribe(authStatus => {
                 expect(authStatus).toBeFalse();
             });
@@ -65,7 +65,7 @@ describe('AuthService', () => {
         });
 
         it('debería retornar falso si el usuario no está autenticado', (done) => {
-            service.logout(); // Asegúrate de que el usuario está desautenticado
+            service.logout();
             service.isAuthenticated().subscribe(authStatus => {
                 expect(authStatus).toBeFalse();
                 done();

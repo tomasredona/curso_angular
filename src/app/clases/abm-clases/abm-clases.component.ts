@@ -11,8 +11,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   selector: 'app-abm-Clases',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, ReactiveFormsModule],
-  templateUrl: './abm-Clases.component.html',
-  styleUrls: ['./abm-Clases.component.css']
+  templateUrl: './abm-clases.component.html',
+  styleUrls: ['./abm-clases.component.css']
 })
 export class AbmClasesComponent implements OnInit {
   claseForm: FormGroup;
